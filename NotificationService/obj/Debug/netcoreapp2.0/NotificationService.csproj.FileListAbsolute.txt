@@ -1,0 +1,10 @@
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\bin\Debug\netcoreapp2.0\NotificationService.deps.json
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\bin\Debug\netcoreapp2.0\NotificationService.runtimeconfig.json
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\bin\Debug\netcoreapp2.0\NotificationService.runtimeconfig.dev.json
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\bin\Debug\netcoreapp2.0\NotificationService.dll
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\bin\Debug\netcoreapp2.0\NotificationService.pdb
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\obj\Debug\netcoreapp2.0\NotificationService.csproj.CoreCompileInputs.cache
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\obj\Debug\netcoreapp2.0\NotificationService.AssemblyInfoInputs.cache
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\obj\Debug\netcoreapp2.0\NotificationService.AssemblyInfo.cs
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\obj\Debug\netcoreapp2.0\NotificationService.dll
+C:\Users\Руслан\source\repos\MessageSender\NotificationService\obj\Debug\netcoreapp2.0\NotificationService.pdb
