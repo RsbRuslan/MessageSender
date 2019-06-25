@@ -37,7 +37,8 @@ namespace MessageSender.Services
 
         public async Task<bool> IsNotified(string recepient, string message)
         {
-            return await _httpService.Get<bool>($"{_config.ServiceUrl}/{recepient}/{message}");
+            return await _httpService.Post<bool>($"{_config.ServiceUrl}/status",
+                new NotificationRequest() { Recepient = recepient, Body = message });
         }
     }
 }

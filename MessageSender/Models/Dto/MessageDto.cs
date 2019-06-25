@@ -16,8 +16,6 @@ namespace MessageSender.Models.Dto
 
         public string Body { get; set; }
 
-        public bool Status { get; set; }
-
         public MessageDto() { }
 
         public MessageDto(Message message)
@@ -25,16 +23,14 @@ namespace MessageSender.Models.Dto
             Id = Guid.NewGuid().ToString();
             Body = message.Body;
             Subject = message.Subject;
-            Recepients = message.Recepients;
-            Status = message.IsDelivered;
+            Recepients = Recepients;
         }
 
         public Message ToDomain() => new Message()
         {
             Body = Body,
             Subject = Subject,
-            Recepients = Recepients,
-            IsDelivered = Status
+            Recepients = Recepients
         };
     }
 }

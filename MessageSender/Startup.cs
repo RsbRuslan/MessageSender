@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MessageSender.Interfaces;
+using MessageSender.Middleware;
 using MessageSender.Models.Option;
 using MessageSender.Repositories;
 using MessageSender.Services;
@@ -30,11 +31,13 @@ namespace MessageSender
             services.AddMvc();
 
             services.Configure<NotificationServiceConfig>(Configuration.GetSection("NotificationServiceConfiguration"));
-
+            
+            services.AddScoped(typeof(IDbService<>), typeof(LiteDbService<>));
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IMessageStatusesRepository, MessageStatusesRepository>();
 
 
             services.AddCors(options =>
@@ -58,8 +61,10 @@ namespace MessageSender
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
             app.UseCors("default");
+           
         }
     }
 }

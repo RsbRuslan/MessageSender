@@ -6,8 +6,24 @@
     <title></title>
 </head>
 <body>
-<h1>Sending Message</h1>
-<script src="js/httpService.js"></script>
-<script src="js/MessageService.js"></script>
+    <h1>Sending Message</h1>
+    <h3>Message Service Url :</h3>
+    <input type="text" id="service_address_holder" class="undefined">
+    <h3>Subject :</h3>
+    <input type="text" id="subject_holder" class="undefined">
+    <h3>Body :</h3>
+    <textarea id="message_body_holder"></textarea>
+    <h3>Recepients :</h3>
+    <div id="recepients_container">
+        <button id="add_recepient_button">Add recepient</button>
+        <div>
+            <input type="text" id="recepient_0" class="recepient_url_holder">
+        </div>
+    </div><br>
+    <button id="send_messag_button">Send</button>
+    <h3>Check status at notifications :</h3>
+    <button id="check_status_button">CheckStatus</button>
+    <script src="js/httpService.js"></script>
+    <script src="js/MessageService.js"></script>
 </body>
-</html>
+</htm>>

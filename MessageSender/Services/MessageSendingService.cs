@@ -13,9 +13,12 @@ namespace MessageSender.Services
         private readonly INotificationService _notificationService;
         private readonly IHttpService _httpService;
         private readonly IMessageRepository _messageRepository;
+        private readonly IMessageStatusesRepository _messageStatusesRepository;
 
-        public MessageService(INotificationService notificationService, IMessageRepository messageRepository, IHttpService httpService)
+        public MessageService(INotificationService notificationService, IMessageRepository messageRepository,
+            IMessageStatusesRepository messageStatusesRepository, IHttpService httpService)
         {
+            _messageStatusesRepository = messageStatusesRepository;
             _notificationService = notificationService;
             _messageRepository = messageRepository;
             _httpService = httpService;
@@ -24,6 +27,11 @@ namespace MessageSender.Services
         public Message GetMessage(string id)
         {
             return _messageRepository.GetMessage(id);
+        }
+
+        public IEnumerable<MessageStatuses> GetRecepientReceiveStatuses(string messageId)
+        {
+            return _messageStatusesRepository.GetStatusesByMessageId(messageId);
         }
 
         public async Task<string> SendMessage(Message message)
@@ -48,15 +56,18 @@ namespace MessageSender.Services
             {
                 Thread.CurrentThread.IsBackground = false;
 
-                bool notificationStatus = true;
-
                 foreach (var recepient in message.Recepients)
-                {
-                    if (!await _notificationService.Notify(recepient, message.Body))
-                        notificationStatus = false;
-                }
+                    UpdateMessageStatus(id, recepient, await _notificationService.Notify(recepient, message.Body));
+            });
+        }
 
-                if (notificationStatus) _messageRepository.UpdateStatus(id, true);
+        private void UpdateMessageStatus(string messageId, string recepient, bool status)
+        {
+            _messageStatusesRepository.CreateRecord(new MessageStatuses()
+            {
+                MessageId = messageId,
+                Recepient = recepient,
+                DeliverySatus = status
             });
         }
     }

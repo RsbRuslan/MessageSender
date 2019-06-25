@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSender", "MessageSender\MessageSender.csproj", "{BC56972B-AF0E-4224-B8E5-E72873A4ED7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageSender", "MessageSender\MessageSender.csproj", "{BC56972B-AF0E-4224-B8E5-E72873A4ED7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{1477310A-4075-403A-B67D-712CB9659205}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService", "NotificationService\NotificationService.csproj", "{1477310A-4075-403A-B67D-712CB9659205}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{37169C8A-3EE7-4942-97A4-CCE2B9F2FE33}"
 	ProjectSection(SolutionItems) = preProject

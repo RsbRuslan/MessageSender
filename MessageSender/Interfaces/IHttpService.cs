@@ -6,6 +6,7 @@ namespace MessageSender.Interfaces
     public interface IHttpService
     {
         Task<T> Get<T>(string requestUrl);
-        Task Post(string requestUrl, object item);
+        Task<T> Post<T>(string requestUrl, object item);
+        Task<string> Post(string requestUrl, object item);
     }
 }

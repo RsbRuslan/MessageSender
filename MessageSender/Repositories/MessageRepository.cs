@@ -13,17 +13,18 @@ namespace MessageSender.Repositories
 {
     public class MessageRepository : IMessageRepository
     {
-        private readonly string _dbFilePath;
+        private readonly IDbService<MessageDto> _dbService;
 
-        public MessageRepository()
+        public MessageRepository(IDbService<MessageDto> dbService)
         {
-            _dbFilePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            _dbFilePath += "/MessagesStorage.db";
+            _dbService = dbService;
         }
+
+        public Message GetMessage(string id) => _dbService.Invoke<Message>((db, messages) => messages.FindById(id).ToDomain());
 
         public string SaveMessage(Message message)
         {
-            return Invoke<string, MessageDto>((db, messages) =>
+            return _dbService.Invoke<string>((db, messages) =>
             {
                 var messageDto = new MessageDto(message);
 
@@ -33,39 +34,14 @@ namespace MessageSender.Repositories
             });
         }
 
-        public Message GetMessage(string id) => Invoke<Message, MessageDto>((db, messages) => messages.FindById(id).ToDomain());
-
-        public void UpdateStatus(string id, bool newStatus)
+        public void UpdateMessage(Message message, string id)
         {
-            Invoke<MessageDto>((db, messages) =>
+            _dbService.Invoke((db, messages) =>
             {
-                var existing = messages.FindById(id);
+                var dto = new MessageDto(message) {Id = id};
 
-                existing.Status = newStatus;
-
-                messages.Update(existing);
+                messages.Update(dto);
             });
         }
-
-        private void Invoke<TCollection>(Action<LiteDatabase, LiteCollection<TCollection>> action)
-        {
-            using (var db = new LiteDatabase(_dbFilePath))
-            {
-                LiteCollection<TCollection> collection = db.GetCollection<TCollection>();
-
-                action.Invoke(db, collection);
-            }
-        }
-
-        private TReturn Invoke<TReturn, TCollection>(Func<LiteDatabase, LiteCollection<TCollection>, TReturn> action)
-        {
-            using (var db = new LiteDatabase(_dbFilePath))
-            {
-                LiteCollection<TCollection> collection = db.GetCollection<TCollection>();
-
-                return action(db, collection);
-            }
-        }
-        
     }
 }

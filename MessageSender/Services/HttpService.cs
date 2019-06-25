@@ -23,13 +23,22 @@ namespace MessageSender.Services
             }
         }
 
-        public async Task Post(string requestUrl, object item)
+        public async Task<T> Post<T>(string requestUrl, object item)
+        {
+            var response = await this.Post(requestUrl, item);
+
+            return JsonConvert.DeserializeObject<T>(response);
+        }
+
+        public async Task<string> Post(string requestUrl, object item)
         {
             using (HttpClient client = new HttpClient())
             {
                 var content = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
                 
-                await client.PostAsync(requestUrl, content);
+                var response = await client.PostAsync(requestUrl, content);
+
+                return await response.Content.ReadAsStringAsync();
             }
         }
     }

@@ -1,0 +1,9 @@
+/.vs/MessageSender/v15/Server/sqlite3/db.lock
+/.vs/MessageSender/v15/Server/sqlite3/storage.ide
+/.vs/MessageSender/v15/Server/sqlite3/storage.ide-shm
+/.vs/MessageSender/v15/Server/sqlite3/storage.ide-wal
+.vs
+/NotificationService/*.user
+/NotificationService/bin
+/MessageSender/bin
+bin

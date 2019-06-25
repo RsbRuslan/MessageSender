@@ -20,10 +20,10 @@ namespace NotificationService.Controllers
             _notificationService = notificationService;
         }
 
-        [HttpGet("status/{recepient}/{body}")]
-        public bool IsExists(string recepient, string body)
+        [HttpPost("status")]
+        public bool IsExists(Notification notification)
         {
-            return _notificationService.IsNotificationExists(new Notification() {Body = body, Recepient = recepient});
+            return _notificationService.IsNotificationExists(notification);
         }
 
         [HttpPost("notify")]

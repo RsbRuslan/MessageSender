@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using MessageSender.Interfaces;
 using MessageSender.Models;
 using MessageSender.Models.Responses;
@@ -25,40 +26,51 @@ namespace MessageSender.Controllers
             _notificationService = notificationService;
         }
 
-        [HttpGet("status/{messageId}")]
-        public async Task<Response<MessageResponse>> CheckStatus(string messageId)
+        
+
+        [HttpGet("messagestatistics/{messageId}")]
+        public async Task<Response<IEnumerable<RecepientStatus>>> MessageStatistics(string messageId)
         {
-            try
-            {
-                var existing = _messageService.GetMessage(messageId);
+            var response = _messageService.GetRecepientReceiveStatuses(messageId);
 
-                if (existing == null) return Response<MessageResponse>.Fail("message not found");
+            List<RecepientStatus> statuses = new List<RecepientStatus>();
 
-                return Response<MessageResponse>.Success(new MessageResponse(){ Message = existing, MessageId = messageId});
-            }
-            catch (Exception e)
+            foreach (var messageStatuses in response)
             {
-                return Response<MessageResponse>.Fail(e.Message);
+                statuses.Add(new RecepientStatus()
+                {
+                    MessageId = messageId,
+                    Status = messageStatuses.DeliverySatus,
+                    Recepient = messageStatuses.Recepient
+                });
             }
-            
+
+            return Response<IEnumerable<RecepientStatus>>.Success(statuses);
+
 
         }
 
         [HttpPost]
         public async Task<Response<MessageResponse>> SendMessage([FromBody]Message message)
         {
-            try
-            {
-                var result = await _messageService.SendMessage(message);
+            var result = await _messageService.SendMessage(message);
+            return Response<MessageResponse>.Success(
+                new MessageResponse() { Message = message, MessageId = result });
+        }
 
-                var msg = _messageService.GetMessage(result);
-                return Response<MessageResponse>.Success(
-                    new MessageResponse() {Message = message, MessageId = result});
-            }
-            catch (Exception e)
+        [HttpPost("notification/{messageId}")]
+        public async Task<Response<RecepientStatus>> MessageRecepientStatistics([FromRoute]string messageId, [FromBody]RecepientContainer container)
+        {
+            var response = await _notificationService.IsNotified(container.Recepient, messageId);
+
+            return Response<RecepientStatus>.Success(new RecepientStatus()
             {
-                return Response<MessageResponse>.Fail(e.Message);
-            }
+                MessageId = messageId,
+                Status = response,
+                Recepient = container.Recepient
+            });
+
+
         }
     }
 }
