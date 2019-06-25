@@ -44,9 +44,9 @@ class MessageService {
         return;
 
         let address = document.getElementById('service_address_holder').value;
-        let response = await this._httpService.get(`${address}/Message/status/${this._messageId}`);
+        let response = await this._httpService.get(`${address}/Message/messagestatistics/${this._messageId}`);
         let json = await response.json();
-        alert(json.data.message.isDelivered);
+        alert(json.isTransactionSuccessed);
     }
     //#endregion
    
