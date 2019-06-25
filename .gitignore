@@ -7,3 +7,4 @@
 /NotificationService/bin
 /MessageSender/bin
 bin
+/MessageSender/*.user
